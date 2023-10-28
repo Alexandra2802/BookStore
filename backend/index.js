@@ -33,6 +33,7 @@ try {
 }
 })
 
+//get all books
 app.get('/books', async (req,res) => {
     try {
         const books = await Book.find({})
@@ -46,7 +47,17 @@ app.get('/books', async (req,res) => {
     }
 })
 
-
+//get a book by id
+app.get('/books/:id', async (req,res) => {
+    try {
+        const {id} = req.params
+        const book = await Book.findById(id)
+        return res.status(200).json(book)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({message: error.message})
+    }
+})
 
 mongoose.connect(mongoDBURL).then(() => {
     console.log('Connected to the database')
