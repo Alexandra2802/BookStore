@@ -9,8 +9,14 @@ const app = express()
 //middleware to parse request body
 app.use(express.json())
 
-app.use('/books',booksRoute)
+//middleware for CORS policy
+app.use(cors({
+    origin:'http://localhost:3000',
+    methods:['GET','PUT','POST','DELETE'],
+    allowedHeaders:['Content-Type']
+}))
 
+app.use('/books',booksRoute)
 
 mongoose.connect(mongoDBURL).then(() => {
     console.log('Connected to the database')
